@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,11 +33,17 @@ public class AuthenticationController {
     private final AuthenticationManager authenticationManager;
 
     private final UserRepository userRepository;
+    private BCryptPasswordEncoder passwordEncoder;
 
 
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.OK)
     public void save(@Valid @RequestBody User userDto) {
+        String password = userDto.getPassword();
+        passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(password);
+        userDto.setPassword(hashedPassword);
+
         userRepository.save(userDto);
     }
 
