@@ -36,7 +36,7 @@ public class AuthenticationController {
     private BCryptPasswordEncoder passwordEncoder;
 
 
-    // test6
+    // test7
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.OK)
     public void save(@Valid @RequestBody User userDto) {
