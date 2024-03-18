@@ -28,7 +28,7 @@ class AuthenticationControllerTest {
         userDto.setName(null);
         userDto.setPassword("12345");
 
-        mockMvc.perform(post("/gtwcl/users")
+        mockMvc.perform(post("/gtwcl/users")//
                         .content(objectMapper.writeValueAsString(userDto))
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
